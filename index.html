@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Digital | Didáctica de la Expresión Artística</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Paleta Artística: Tonos púrpuras y magenta */
+            --primary: #9333ea;         
+            --primary-dark: #6b21a8;
+            --secondary: #ec4899;       
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.06);
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding-bottom: 2.5rem;
+        }
+
+        /* Banner Portada Compacta */
+        .hero-header {
+            /* Imagen de fondo relacionada a arte/pintura */
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.92) 0%, rgba(107, 33, 168, 0.96) 100%), 
+                        url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80') center/cover;
+            color: white;
+            padding: 1.25rem 1rem 1.5rem;
+            border-bottom: 4px solid var(--secondary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Barra Superior */
+        .university-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .university-logo {
+            background-color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .university-logo img {
+            height: 34px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .portfolio-badge {
+            background: rgba(236, 72, 153, 0.25);
+            border: 1px solid var(--secondary);
+            color: #fbcfe8;
+            padding: 0.35rem 0.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Título del Curso */
+        .course-title-section {
+            margin-bottom: 1rem;
+        }
+
+        .course-title-section h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+
+        /* Grilla de Ficha Informativa */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(6px);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fbcfe8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .info-content label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #cbd5e1;
+            line-height: 1;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-content span, .info-content ol {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .students-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .students-list li {
+            font-size: 0.82rem;
+            font-weight: 500;
+            line-height: 1.35;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .students-list li::before {
+            content: "•";
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Contenido Principal */
+        .main-container {
+            max-width: 1200px;
+            margin: 1.5rem auto 0;
+            padding: 0 1rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Grilla Amplia para Tarjetas */
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* Tarjeta de Semana */
+        .week-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .week-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+        }
+
+        .week-card-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .week-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            line-height: 1.3;
+        }
+
+        .week-badge {
+            background-color: #fae8ff;
+            color: #86198f;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            align-self: flex-start;
+        }
+
+        /* Grupo de Botones */
+        .buttons-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.75rem;
+            width: 100%;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            text-decoration: none;
+            text-align: center;
+            line-height: 1.2;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+            color: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero-header {
+                padding: 1rem 0.75rem 1.25rem;
+            }
+            .course-title-section h1 {
+                font-size: 1.35rem;
+            }
+            .university-logo img {
+                height: 28px;
+            }
+            .portfolio-badge {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.6rem;
+            }
+            .weeks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PORTADA COMPACTA -->
+    <header class="hero-header">
+        <div class="hero-container">
+            
+            <!-- Header Institucional -->
+            <div class="university-header">
+                <div class="university-logo">
+                    <img src="https://visualizate.utpxpedition.com/sites/default/files/2020-02/logo-visualizate.png" alt="Logo UTP">
+                </div>
+                <div class="portfolio-badge">
+                    <i class="fa-solid fa-palette"></i> Portafolio de Arte
+                </div>
+            </div>
+
+            <!-- Título del Curso -->
+            <div class="course-title-section">
+                <h1>Didáctica de la Expresión Artística</h1>
+            </div>
+
+            <!-- Datos Generales e Integrantes -->
+            <div class="info-grid">
+                <!-- Docente y Sección -->
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="info-content">
+                        <label>Docente</label>
+                        <span>ESTEFANY MILAGROS PACHAS RAMIREZ</span>
+                        <div style="font-size: 0.75rem; color: #fbcfe8;">Sección: 45209</div>
+                    </div>
+                </div>
+
+                <!-- Estudiante -->
+                <div class="info-card" style="grid-column: span 1;">
+                    <div class="info-icon" style="align-self: flex-start; margin-top: 0.2rem;">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <div class="info-content" style="width: 100%;">
+                        <label>Estudiante</label>
+                        <ul class="students-list">
+                            <li>Aaron Sixto Callupe Llallico</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- CONTENIDO / SEMANAS -->
+    <main class="main-container">
+        
+        <div class="section-header">
+            <h2>
+                <i class="fa-solid fa-masks-theater"></i> Semanas de Actividades
+            </h2>
+            <span id="totalSemanasText" style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;"></span>
+        </div>
+
+        <div class="weeks-grid" id="weeksContainer">
+            <!-- Se generan las semanas dinámicamente -->
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Portafolio Digital | Callupe Llallico Aaron | Didáctica de la Expresión Artística</p>
+        </footer>
+    </main>
+
+    <script>
+        const semanasData = [
+            {
+                semana: 9,
+                titulo: "Semana 9 - Técnicas y actividades gráfico plásticas para la educación primaria",
+                actividades: [
+                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" },
+                    { texto: "Actividad en fisico", archivo: "#", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
+                ]
+            },
+            /*{
+                semana: 10,
+                titulo: "Semana 10 - Elementos del lenguaje musical",
+                actividades: [
+                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" }
+                ]
+            },*/
+            {
+                semana: 11,
+                titulo: "Semana 11 - Estrategias y técnicas de enseñanza",
+                actividades: [
+                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" },
+                    { texto: "Actividad en fisico", archivo: "#", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
+                ]
+            },
+            {
+                semana: 12,
+                titulo: "Semana 12",
+                actividades: [
+                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" },
+                    { texto: "Actividad en fisico", archivo: "#", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
+                ]
+            },
+            {
+                semana: 13,
+                titulo: "Semana 13",
+                actividades: [
+                    { texto: "Evidencia de elaboracion de instrumentos musicales", archivo: "#", icono: "fa-guitar", claseBtn: "btn" }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('weeksContainer');
+        document.getElementById('totalSemanasText').textContent = `${semanasData.length} Semanas`;
+
+        semanasData.forEach(item => {
+            const weekCard = document.createElement('div');
+            weekCard.className = 'week-card';
+
+            let botonesHTML = '';
+            item.actividades.forEach(act => {
+                botonesHTML += `
+                    <a href="${act.archivo}" class="${act.claseBtn}" title="${act.texto}">
+                        <i class="fa-solid ${act.icono}"></i> ${act.texto}
+                    </a>
+                `;
+            });
+
+            weekCard.innerHTML = `
+                <div>
+                    <div class="week-card-header">
+                        <span class="week-badge">Sesión ${item.semana}</span>
+                        <h3 class="week-title">
+                            <i class="fa-solid fa-palette" style="color: var(--secondary);"></i> 
+                            ${item.titulo}
+                        </h3>
+                    </div>
+                </div>
+                <div class="buttons-group">
+                    ${botonesHTML}
+                </div>
+            `;
+
+            container.appendChild(weekCard);
+        });
+    </script>
+
+</body>
+</html>
