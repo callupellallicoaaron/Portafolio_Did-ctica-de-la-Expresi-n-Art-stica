@@ -203,7 +203,7 @@
             gap: 0.5rem;
         }
 
-        /* Grilla Amplia para Tarjetas */
+        /* Grilla Amplia para Tarjetas (Responsive) */
         .weeks-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -406,8 +406,8 @@
                 semana: 9,
                 titulo: "Semana 9 - Técnicas y actividades gráfico plásticas para la educación primaria",
                 actividades: [
-                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" },
-                    { texto: "Actividad en fisico", archivo: "#", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
+                    { texto: "Actividad Digital", archivo: "Actividad-9-1.html", icono: "fa-desktop", claseBtn: "btn" },
+                    { texto: "Actividad en fisico", archivo: "Actividad-9-2.html", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
                 ]
             },
             /*{
@@ -419,25 +419,26 @@
             },*/
             {
                 semana: 11,
-                titulo: "Semana 11 - Estrategias y técnicas de enseñanza",
+                titulo: "Semana 11  - Elementos del lenguaje musical",
                 actividades: [
-                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" },
-                    { texto: "Actividad en fisico", archivo: "#", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
+                    { texto: "Actividad Digital", archivo: "Actividad-11-1.html", icono: "fa-desktop", claseBtn: "btn" },
+                    { texto: "Actividad en fisico", archivo: "Actividad-11-2.html", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
                 ]
             },
             {
                 semana: 12,
-                titulo: "Semana 12",
+                titulo: "Semana 12 - Estrategias y técnicas de enseñanza",
                 actividades: [
-                    { texto: "Actividad Digital", archivo: "#", icono: "fa-desktop", claseBtn: "btn" },
-                    { texto: "Actividad en fisico", archivo: "#", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
+                    { texto: "Actividad Digital", archivo: "Actividad-9-1.html", icono: "fa-desktop", claseBtn: "btn" },
+                    { texto: "Actividad en fisico", archivo: "Actividad-9-2.html", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
                 ]
             },
             {
                 semana: 13,
-                titulo: "Semana 13",
+                titulo: "Semana 13 - Diseño y construcción del instrumento reciclado",
                 actividades: [
-                    { texto: "Evidencia de elaboracion de instrumentos musicales", archivo: "#", icono: "fa-guitar", claseBtn: "btn" }
+                    { texto: "Evidencia de video", archivo: "Actividad-13-1.html", icono: "fa-guitar", claseBtn: "btn" },
+                    { texto: "Evidencia fisica", archivo: "Actividad-13-2.html", icono: "fa-paintbrush", claseBtn: "btn btn-secondary" }
                 ]
             }
         ];
@@ -451,6 +452,7 @@
 
             let botonesHTML = '';
             item.actividades.forEach(act => {
+                // El enlace (href) carga el HTML en la misma ventana, permitiendo usar el botón "Atrás" del navegador.
                 botonesHTML += `
                     <a href="${act.archivo}" class="${act.claseBtn}" title="${act.texto}">
                         <i class="fa-solid ${act.icono}"></i> ${act.texto}
