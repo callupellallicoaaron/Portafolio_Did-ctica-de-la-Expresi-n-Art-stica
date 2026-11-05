@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video - Instrumentos Musicales</title>
+    <!-- Cargamos Tailwind CSS para los estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos adicionales opcionales para personalizar el reproductor si es necesario */
+        video {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 min-h-screen flex items-center justify-center p-4 font-sans selection:bg-indigo-500 selection:text-white">
+
+    <!-- Contenedor principal centrado -->
+    <div class="bg-slate-800 p-6 md:p-10 rounded-3xl shadow-2xl border border-slate-700 w-full max-w-5xl flex flex-col items-center transform transition-all hover:scale-[1.01] duration-300">
+        
+        <!-- Título -->
+        <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 mb-8 text-center tracking-tight">
+            Construccion de Instrumentos Musicales
+        </h1>
+
+        <!-- Contenedor del video para mantener la proporción -->
+        <div class="relative w-full rounded-2xl overflow-hidden shadow-black/50 shadow-lg bg-black">
+            <!-- 
+                Elemento de video HTML5. 
+                - controls: Muestra los controles de reproducción (play, pausa, volumen, etc.)
+                - w-full: Ocupa todo el ancho del contenedor
+                - src: Apunta al archivo local especificado
+            -->
+            <video 
+                controls 
+                class="w-full h-auto max-h-[70vh] object-contain"
+                src="Instrumentos musicales.mp4"
+                preload="metadata"
+            >
+                <!-- Mensaje de respaldo en caso de que el navegador no soporte HTML5 video -->
+                Tu navegador no soporta la reproducción de videos HTML5.
+            </video>
+        </div>
+        
+        <!-- Pie de página o información adicional -->
+        <p class="text-slate-400 mt-6 text-sm text-center">
+            &copy Callupe Llallico Aaron
+        </p>
+
+    </div>
+
+</body>
+</html>
