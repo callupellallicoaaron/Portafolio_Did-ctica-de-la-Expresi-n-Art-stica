@@ -23,28 +23,25 @@
             Construccion de Instrumentos Musicales
         </h1>
 
-        <!-- Contenedor del video para mantener la proporción -->
-        <div class="relative w-full rounded-2xl overflow-hidden shadow-black/50 shadow-lg bg-black">
-            <!-- 
-                Elemento de video HTML5. 
-                - controls: Muestra los controles de reproducción (play, pausa, volumen, etc.)
-                - w-full: Ocupa todo el ancho del contenedor
-                - src: Apunta al archivo local especificado
-            -->
-            <video 
-                controls 
-                class="w-full h-auto max-h-[70vh] object-contain"
-                src="Instrumentos musicales.mp4"
-                preload="metadata"
-            >
-                <!-- Mensaje de respaldo en caso de que el navegador no soporte HTML5 video -->
-                Tu navegador no soporta la reproducción de videos HTML5.
-            </video>
-        </div>
+        <!-- Enlace simulando el reproductor -->
+        <a href="https://youtu.be/sL2cbkPLk64" target="_blank" rel="noopener noreferrer" class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-black/50 shadow-lg bg-black block group cursor-pointer">
+            
+            <!-- Miniatura de YouTube -->
+            <img src="https://img.youtube.com/vi/sL2cbkPLk64/hqdefault.jpg" alt="Miniatura de Instrumentos Musicales" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+            
+            <!-- Botón de Play sobrepuesto -->
+            <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/50 transition-all duration-300">
+                <div class="w-20 h-20 flex items-center justify-center bg-white/80 rounded-full shadow-lg backdrop-blur-sm group-hover:bg-white transition-all group-hover:scale-110">
+                    <svg class="w-10 h-10 text-slate-900 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </div>
+            </div>
+        </a>
         
         <!-- Pie de página o información adicional -->
         <p class="text-slate-400 mt-6 text-sm text-center">
-            &copy Callupe Llallico Aaron
+            Haz clic en la imagen para abrir y ver el video en <span class="text-red-400 font-semibold">YouTube</span>.
         </p>
 
     </div>
