@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Contradanza — Presentación en Video</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes de Google: Inter (cuerpo) y Playfair Display (títulos elegantes) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#D97706',
+                            amber: '#F59E0B',
+                            crimson: '#991B1B',
+                            dark: '#0B0F19',
+                            surface: '#111827',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden">
+
+    <!-- Fondo decorativo con degradados sutiles -->
+    <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/3 -right-40 w-96 h-96 bg-red-800/15 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Barra de navegación superior -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-brand-dark/80 border-b border-slate-800/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logotipo / Título -->
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-red-700 flex items-center justify-center shadow-lg shadow-amber-900/30">
+                    <!-- Icono de reproducción SVG -->
+                    <svg class="w-5 h-5 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-serif text-lg sm:text-xl font-bold tracking-wide text-white block leading-none">La Contradanza</span>
+                    <span class="text-xs text-amber-400/90 font-medium tracking-wider uppercase">Archivo Local</span>
+                </div>
+            </div>
+
+            <!-- Botones de acción rápida en cabecera -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="btnTheaterTop" type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700/80 transition active:scale-95" title="Alternar Modo Teatro (Tecla T)">
+                    <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+                    </svg>
+                    <span class="hidden sm:inline">Modo Teatro</span>
+                </button>
+
+                <!-- Botón opcional para cargar el video manualmente si se previsualiza fuera de la carpeta -->
+                <label for="localFileInput" class="cursor-pointer inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 transition active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                    </svg>
+                    <span>Cargar Video</span>
+                </label>
+                <input id="localFileInput" type="file" accept="video/*" class="hidden">
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 w-full py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+        <!-- Contenedor dinámico que se expande en Modo Teatro -->
+        <div id="mainContainer" class="max-w-5xl mx-auto transition-all duration-300 space-y-8">
+
+            <!-- Encabezado de presentación -->
+            <section class="text-center sm:text-left flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold tracking-wide">
+                        <span id="statusDot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                        <span id="statusText">Cargando Contradanza.mp4...</span>
+                    </div>
+                    <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                        Contradanza
+                    </h1>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-2xl">
+                        Reproducción directa en alta definición desde el archivo local <code class="px-2 py-0.5 rounded-md bg-slate-800 text-amber-300 text-xs sm:text-sm font-mono">Contradanza.mp4</code>.
+                    </p>
+                </div>
+
+                <!-- Indicador de duración y resolución detectada -->
+                <div class="flex items-center justify-center sm:justify-end gap-3 text-xs text-slate-400">
+                    <div class="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span id="videoDuration">--:--</span>
+                    </div>
+                    <div class="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span id="videoResolution">MP4 Local</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tarjeta del Reproductor de Video -->
+            <section class="rounded-3xl bg-slate-900/80 border border-slate-800/90 shadow-2xl shadow-black/60 overflow-hidden">
+                <!-- Contenedor responsivo 16:9 para el video -->
+                <div class="relative w-full aspect-video bg-black flex items-center justify-center group">
+                    
+                    <!-- Elemento de Video HTML5 apuntando a Contradanza.mp4 en la misma carpeta -->
+                    <video
+                        id="videoPlayer"
+                        class="w-full h-full object-contain rounded-t-3xl focus:outline-none"
+                        controls
+                        playsinline
+                        preload="metadata"
+                    >
+                        <source src="Contradanza.mp4" type="video/mp4">
+                        Tu navegador no soporta la etiqueta de video HTML5.
+                    </video>
+
+                    <!-- Capa de respaldo (Fallback) si Contradanza.mp4 no se encuentra en la carpeta -->
+                    <div id="errorOverlay" class="hidden absolute inset-0 bg-slate-950/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-20">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-lg sm:text-xl font-semibold text-white mb-2">
+                            No se encontró <span class="text-amber-400 font-mono">Contradanza.mp4</span>
+                        </h2>
+                        <p class="text-slate-400 text-xs sm:text-sm max-w-md mb-6 leading-relaxed">
+                            Asegúrate de guardar este archivo <code class="text-slate-200 bg-slate-800 px-1.5 py-0.5 rounded">index.html</code> exactamente en la misma carpeta que <code class="text-amber-300 bg-slate-800 px-1.5 py-0.5 rounded">Contradanza.mp4</code> (respetando mayúsculas y minúsculas).
+                        </p>
+                        <div class="flex flex-wrap items-center justify-center gap-3">
+                            <button id="btnRetry" type="button" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium border border-slate-700 transition active:scale-95">
+                                Reintentar carga
+                            </button>
+                            <label for="localFileInput" class="cursor-pointer px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-sm font-semibold shadow-lg shadow-amber-900/30 transition active:scale-95">
+                                Seleccionar Contradanza.mp4 manualmente
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barra de herramientas avanzada debajo del video -->
+                <div class="p-4 sm:px-6 sm:py-4 bg-slate-900/95 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
+                    
+                    <!-- Controles rápidos de reproducción -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button id="btnPlayPause" type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-sm transition shadow-md shadow-amber-900/20 active:scale-95">
+                            <svg id="iconPlay" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <svg id="iconPause" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                            </svg>
+                            <span id="labelPlayPause">Reproducir</span>
+                        </button>
+
+                        <button id="btnBack10" type="button" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium border border-slate-700/70 transition active:scale-95" title="Retroceder 10 segundos (Flecha Izquierda)">
+                            -10s
+                        </button>
+
+                        <button id="btnForward10" type="button" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium border border-slate-700/70 transition active:scale-95" title="Adelantar 10 segundos (Flecha Derecha)">
+                            +10s
+                        </button>
+
+                        <button id="btnLoop" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700/70 transition active:scale-95" title="Repetir video continuamente">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <polyline points="17 1 21 5 17 9"></polyline>
+                                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                                <polyline points="7 23 3 19 7 15"></polyline>
+                                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                            </svg>
+                            <span>Bucle</span>
+                        </button>
+                    </div>
+
+                    <!-- Velocidad y Pantalla en Pantalla (PiP) -->
+                    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <div class="flex items-center gap-2 bg-slate-800/90 border border-slate-700/70 rounded-xl px-3 py-1.5">
+                            <span class="text-xs text-slate-400 font-medium">Velocidad:</span>
+                            <select id="speedSelect" class="bg-transparent text-amber-400 text-xs sm:text-sm font-semibold focus:outline-none cursor-pointer">
+                                <option value="0.5" class="bg-slate-900 text-white">0.5x</option>
+                                <option value="0.75" class="bg-slate-900 text-white">0.75x</option>
+                                <option value="1" selected class="bg-slate-900 text-white">1.0x (Normal)</option>
+                                <option value="1.25" class="bg-slate-900 text-white">1.25x</option>
+                                <option value="1.5" class="bg-slate-900 text-white">1.5x</option>
+                                <option value="2" class="bg-slate-900 text-white">2.0x</option>
+                            </select>
+                        </div>
+
+                        <button id="btnPip" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium border border-slate-700/70 transition active:scale-95" title="Ventana flotante (Picture-in-Picture)">
+                            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <rect x="12" y="11" width="7" height="6" rx="1" fill="currentColor"></rect>
+                            </svg>
+                            <span class="hidden sm:inline">Miniatura</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección informativa y atajos de teclado -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Reseña Cultural -->
+                <article class="md:col-span-2 p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 space-y-4">
+                    <div class="flex items-center gap-2 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        <span>Sobre la Danza</span>
+                    </div>
+                    <h2 class="font-serif text-2xl font-bold text-white">Expresión, Ritmo y Tradición</h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        La <strong>Contradanza</strong> es una vibrante manifestación folclórica que combina elegancia, sátira y destreza física. Originada como una adaptación andina de los antiguos bailes de salón europeos, destaca por su colorido vestuario, el zapateo enérgico y las coreografías sincronizadas al compás de la música tradicional.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700/60">Folclore</span>
+                        <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700/60">Danza Tradicional</span>
+                        <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700/60">Video Local MP4</span>
+                    </div>
+                </article>
+
+                <!-- Guía de Atajos de Teclado -->
+                <aside class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 space-y-4">
+                    <div class="flex items-center gap-2 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                            <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"></path>
+                        </svg>
+                        <span>Atajos de Teclado</span>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center justify-between text-slate-300">
+                            <span>Reproducir / Pausar</span>
+                            <kbd class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300">Espacio</kbd>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-300">
+                            <span>Pantalla completa</span>
+                            <kbd class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300">F</kbd>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-300">
+                            <span>Silenciar audio</span>
+                            <kbd class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300">M</kbd>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-300">
+                            <span>Modo Teatro</span>
+                            <kbd class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300">T</kbd>
+                        </li>
+                        <li class="flex items-center justify-between text-slate-300">
+                            <span>Adelantar / Retroceder</span>
+                            <div class="flex gap-1">
+                                <kbd class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300">←</kbd>
+                                <kbd class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300">→</kbd>
+                            </div>
+                        </li>
+                    </ul>
+                </aside>
+            </section>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="border-t border-slate-800/80 py-6 mt-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+            <p>Reproductor Web Local — <span class="text-slate-300 font-medium">Contradanza.mp4</span></p>
+            <p>Diseñado para reproducción fluida en escritorio y dispositivos móviles.</p>
+        </div>
+    </footer>
+
+    <!-- Notificación flotante (Toast) para mensajes sin usar alert() -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="px-4 py-3 rounded-2xl bg-slate-800/95 backdrop-blur-md border border-slate-700 text-slate-100 text-sm font-medium shadow-xl flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span id="toastMessage">Mensaje</span>
+        </div>
+    </div>
+
+    <!-- Lógica JavaScript del Reproductor -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Referencias a elementos del DOM
+            const video = document.getElementById('videoPlayer');
+            const errorOverlay = document.getElementById('errorOverlay');
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const videoDurationEl = document.getElementById('videoDuration');
+            const videoResolutionEl = document.getElementById('videoResolution');
+
+            // Controles personalizados
+            const btnPlayPause = document.getElementById('btnPlayPause');
+            const iconPlay = document.getElementById('iconPlay');
+            const iconPause = document.getElementById('iconPause');
+            const labelPlayPause = document.getElementById('labelPlayPause');
+            const btnBack10 = document.getElementById('btnBack10');
+            const btnForward10 = document.getElementById('btnForward10');
+            const btnLoop = document.getElementById('btnLoop');
+            const speedSelect = document.getElementById('speedSelect');
+            const btnPip = document.getElementById('btnPip');
+            const btnTheaterTop = document.getElementById('btnTheaterTop');
+            const mainContainer = document.getElementById('mainContainer');
+            const btnRetry = document.getElementById('btnRetry');
+            const localFileInput = document.getElementById('localFileInput');
+
+            // Notificación Toast
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            let toastTimer = null;
+            let isTheaterMode = false;
+
+            /**
+             * Muestra una notificación temporal no intrusiva en la esquina inferior derecha.
+             * @param {string} message - Texto a mostrar
+             */
+            function showToast(message) {
+                toastMessage.textContent = message;
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 2600);
+            }
+
+            /**
+             * Formatea segundos en formato MM:SS o HH:MM:SS.
+             * @param {number} seconds - Duración en segundos
+             * @returns {string} Tiempo formateado
+             */
+            function formatTime(seconds) {
+                if (isNaN(seconds) || !isFinite(seconds)) return '--:--';
+                const hrs = Math.floor(seconds / 3600);
+                const mins = Math.floor((seconds % 3600) / 60);
+                const secs = Math.floor(seconds % 60);
+                const pad = (n) => n.toString().padStart(2, '0');
+                return hrs > 0 ? `${hrs}:${pad(mins)}:${pad(secs)}` : `${pad(mins)}:${pad(secs)}`;
+            }
+
+            /**
+             * Actualiza el aspecto del botón Reproducir/Pausar según el estado del video.
+             */
+            function updatePlayPauseUI() {
+                if (video.paused || video.ended) {
+                    iconPlay.classList.remove('hidden');
+                    iconPause.classList.add('hidden');
+                    labelPlayPause.textContent = 'Reproducir';
+                } else {
+                    iconPlay.classList.add('hidden');
+                    iconPause.classList.remove('hidden');
+                    labelPlayPause.textContent = 'Pausar';
+                }
+            }
+
+            /**
+             * Alterna el estado de reproducción del video con manejo de errores.
+             */
+            async function togglePlay() {
+                try {
+                    if (video.paused || video.ended) {
+                        await video.play();
+                    } else {
+                        video.pause();
+                    }
+                } catch (err) {
+                    showToast('No se pudo reproducir el video. Verifica que el archivo exista.');
+                }
+            }
+
+            /**
+             * Alterna el Modo Teatro expandiendo el contenedor principal.
+             */
+            function toggleTheaterMode() {
+                isTheaterMode = !isTheaterMode;
+                if (isTheaterMode) {
+                    mainContainer.classList.remove('max-w-5xl');
+                    mainContainer.classList.add('max-w-7xl');
+                    btnTheaterTop.classList.add('border-amber-500/60', 'text-amber-300');
+                    showToast('Modo Teatro activado');
+                } else {
+                    mainContainer.classList.remove('max-w-7xl');
+                    mainContainer.classList.add('max-w-5xl');
+                    btnTheaterTop.classList.remove('border-amber-500/60', 'text-amber-300');
+                    showToast('Modo normal activado');
+                }
+            }
+
+            // --- Eventos del elemento <video> ---
+
+            // Cuando se cargan los metadatos del video (duración, resolución)
+            video.addEventListener('loadedmetadata', () => {
+                errorOverlay.classList.add('hidden');
+                statusDot.classList.remove('bg-amber-400', 'bg-red-500', 'animate-pulse');
+                statusDot.classList.add('bg-emerald-400');
+                statusText.textContent = 'Video listo para reproducir';
+
+                videoDurationEl.textContent = formatTime(video.duration);
+                if (video.videoWidth && video.videoHeight) {
+                    videoResolutionEl.textContent = `${video.videoWidth}×${video.videoHeight}p`;
+                }
+            });
+
+            // Sincronización de botones al reproducir/pausar
+            video.addEventListener('play', updatePlayPauseUI);
+            video.addEventListener('pause', updatePlayPauseUI);
+            video.addEventListener('ended', updatePlayPauseUI);
+
+            // Manejo de error si el archivo Contradanza.mp4 no existe en la ruta actual
+            const sourceEl = video.querySelector('source');
+            function handleVideoError() {
+                errorOverlay.classList.remove('hidden');
+                statusDot.classList.remove('bg-amber-400', 'bg-emerald-400', 'animate-pulse');
+                statusDot.classList.add('bg-red-500');
+                statusText.textContent = 'Archivo Contradanza.mp4 no detectado';
+            }
+
+            video.addEventListener('error', handleVideoError);
+            if (sourceEl) {
+                sourceEl.addEventListener('error', handleVideoError);
+            }
+
+            // --- Eventos de los botones de control ---
+
+            btnPlayPause.addEventListener('click', togglePlay);
+
+            btnBack10.addEventListener('click', () => {
+                video.currentTime = Math.max(0, video.currentTime - 10);
+                showToast('Retrocedido 10 segundos');
+            });
+
+            btnForward10.addEventListener('click', () => {
+                const target = video.currentTime + 10;
+                video.currentTime = isFinite(video.duration) ? Math.min(video.duration, target) : target;
+                showToast('Adelantado 10 segundos');
+            });
+
+            btnLoop.addEventListener('click', () => {
+                video.loop = !video.loop;
+                if (video.loop) {
+                    btnLoop.classList.add('bg-amber-500/20', 'text-amber-300', 'border-amber-500/40');
+                    btnLoop.classList.remove('bg-slate-800', 'text-slate-300');
+                    showToast('Repetición en bucle activada');
+                } else {
+                    btnLoop.classList.remove('bg-amber-500/20', 'text-amber-300', 'border-amber-500/40');
+                    btnLoop.classList.add('bg-slate-800', 'text-slate-300');
+                    showToast('Repetición en bucle desactivada');
+                }
+            });
+
+            speedSelect.addEventListener('change', (e) => {
+                video.playbackRate = parseFloat(e.target.value);
+                showToast(`Velocidad ajustada a ${e.target.value}x`);
+            });
+
+            btnPip.addEventListener('click', async () => {
+                try {
+                    if (!document.pictureInPictureEnabled) {
+                        showToast('Tu navegador no soporta el modo miniatura (PiP).');
+                        return;
+                    }
+                    if (document.pictureInPictureElement) {
+                        await document.exitPictureInPicture();
+                    } else {
+                        await video.requestPictureInPicture();
+                    }
+                } catch (err) {
+                    showToast('Primero reproduce el video para usar el modo miniatura.');
+                }
+            });
+
+            btnTheaterTop.addEventListener('click', toggleTheaterMode);
+
+            // Reintentar cargar Contradanza.mp4 desde la carpeta local
+            btnRetry.addEventListener('click', () => {
+                errorOverlay.classList.add('hidden');
+                statusDot.classList.remove('bg-red-500');
+                statusDot.classList.add('bg-amber-400', 'animate-pulse');
+                statusText.textContent = 'Buscando Contradanza.mp4...';
+                video.src = 'Contradanza.mp4';
+                video.load();
+            });
+
+            // Permitir al usuario cargar un archivo local manualmente (útil para pruebas rápidas)
+            localFileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const objectURL = URL.createObjectURL(file);
+                video.src = objectURL;
+                video.load();
+                errorOverlay.classList.add('hidden');
+                showToast(`Cargado: ${file.name}`);
+                video.play().catch(() => {});
+            });
+
+            // --- Atajos de teclado globales ---
+            document.addEventListener('keydown', (e) => {
+                // Evitar interferir si el usuario está enfocado en un selector
+                if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+                switch (e.key.toLowerCase()) {
+                    case ' ':
+                        e.preventDefault();
+                        togglePlay();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        if (!document.fullscreenElement) {
+                            video.requestFullscreen?.().catch(() => {});
+                        } else {
+                            document.exitFullscreen?.().catch(() => {});
+                        }
+                        break;
+                    case 'm':
+                        video.muted = !video.muted;
+                        showToast(video.muted ? 'Audio silenciado' : 'Audio activado');
+                        break;
+                    case 't':
+                        toggleTheaterMode();
+                        break;
+                    case 'arrowright':
+                        video.currentTime = Math.min(video.duration || video.currentTime + 10, video.currentTime + 10);
+                        break;
+                    case 'arrowleft':
+                        video.currentTime = Math.max(0, video.currentTime - 10);
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
